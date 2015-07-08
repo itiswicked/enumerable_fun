@@ -1,22 +1,17 @@
 class MyEnumerable
 
   def count_each(items)
-    items.flatten.reduce({}) do |hash, item|
+    hash = items.flatten.reduce({}) do |hash, item|
       hash[item] ? hash[item] += 1 : hash[item] = 1
       hash
     end
+    hash
   end
 
   def most_occuring(items)
     hash = count_each(items)
-    items.flatten.reduce([]) do |memo, item|
-      if hash[item] == hash[memo.last] && item != memo.last
-        memo << item
-      elsif memo.empty? || hash[item] > hash[memo.last] 
-        memo = [item] 
-      end
-      memo
-    end
+    max_value = hash.values.max
+    hash.select { |key, value| value == max_value }.keys
   end
 
   def least_occuring(items)
