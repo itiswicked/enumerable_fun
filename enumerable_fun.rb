@@ -1,11 +1,10 @@
 class MyEnumerable
 
   def count_each(items)
-    hash = items.flatten.reduce({}) do |hash, item|
+    items.flatten.reduce({}) do |hash, item|
       hash[item] ? hash[item] += 1 : hash[item] = 1
       hash
     end
-    hash
   end
 
   def most_occuring(items)
