@@ -1,6 +1,6 @@
 class MyEnumerable
 
-  def count_each(items)
+  def count_of(items)
     items.flatten.reduce({}) do |hash, item|
       hash[item] ? hash[item] += 1 : hash[item] = 1
       hash
@@ -8,15 +8,13 @@ class MyEnumerable
   end
 
   def most_occuring(items)
-    hash = count_each(items)
-    max_value = hash.values.max
-    hash.select { |key, value| value == max_value }.keys
+    hash = count_of(items)
+    hash.select { |key, value| value == max_value(hash) }.keys
   end
 
   def least_occuring(items)
-    hash = count_each(items)
-    min_value = hash.values.min
-    hash.select { |key, value| value == min_value }.keys
+    hash = count_of(items)
+    hash.select { |key, value| value == min_value(hash) }.keys
   end
 
   def sum_of(items)
@@ -36,12 +34,16 @@ class MyEnumerable
     sum_of(items).to_f / size_of(items)
   end
 
-  def sort_asc(items);end
+  def sort_asc(items)
+    # impliment bubble sort or similar
+  end
 
-  def sort_desc(items);end
+  def sort_desc(items)
+    # impliment reverse bubble sort or similar
+  end
 
   def uniques(items)
-    count_each(items).reduce([]) { |uniqs, (key, value)| 
+    count_of(items).reduce([]) { |uniqs, (key, value)| 
       uniqs << key if value == 1; uniqs
     }.sort
   end
@@ -49,6 +51,14 @@ class MyEnumerable
   def sum_columns(items);end
 
   private
+
+  def max_value(items)
+    items.values.max
+  end
+
+  def min_value(items)
+    items.values.min
+  end
 
   # may be useful helper for sum_colums
   def rotate_2d_ary(items);end
