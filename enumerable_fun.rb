@@ -67,10 +67,10 @@ class MyEnumerable
   end
 
   def uniques items
-    # #sort will be replaced once #sort_asc is implemented
-    count_of(items).reduce([]) { |uniqs, (key, value)| 
-      uniqs << key if value == 1; uniqs
-    }.sort
+    sort_asc(
+      count_of(items).reduce([]) { |uniqs, (key, value)| 
+        uniqs << key if value == 1; uniqs
+      })
   end
 
   def sum_columns items
@@ -91,11 +91,11 @@ class MyEnumerable
   # this doesn't cleanly rotate the collection, but rather takes items with the same index and puts them in their own subcollection within memo.
 
   def transpose_2d_ary items
-    items.reduce(Array.new(items[0].size, [])) do |memo, item|
+    items.reduce(Array.new(items[0].size) { [] }) do |memo, item|
       item.each_with_index do |subitem, index| 
-        memo[index].push(subitem)
-        p memo
+        memo[index].push subitem 
       end
+      memo
     end
   end
 
